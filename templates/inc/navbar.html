@@ -1,31 +1,49 @@
-<div class="navbar bg-base-100">
-    <div class="flex-1">
-        <a class="btn btn-ghost normal-case text-xl">صمدگرام</a>
+<div class="navbar sticky top-0 z-10  bg-base-100">
+    <div class="navbar-start">
+        {% if request.user.is_authenticated %}
+            <div class="flex-none flex flex-row gap-2">
+                <div class="dropdown">
+                    <label tabindex="0" class="btn btn-ghost btn-circle avatar hover:shadow-md">
+                        <div class="w-12 rounded-full">
+                            <img src="https://api.lorem.space/image/face?hash=33791" />
+                        </div>
+                    </label>
+                    <ul tabindex="0"
+                        class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+                        <li>
+                            <a href="{% url 'home:home' %}">خانه</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'account:profile' request.user.id %}">پروفایل</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'account:logout' %}">خروج</a>
+                        </li>
+                    </ul>
+                </div>
+                <a class="btn btn-ghost hover:bg-blue-100 btn-square" href="{% url 'account:post_create' %}">
+                    <i class="text-primary fa-solid fa-plus text-2xl"></i>
+                </a>
+            </div>
+        {% else %}
+            <div class="flex-none gap-1">
+                <label for="login-modal"
+                       class="btn btn-ghost modal-button text-primary hover:bg-primary hover:text-white">ورود</label>
+                <label for="registration-modal"
+                       class="btn btn-ghost modal-button text-primary hover:bg-primary hover:text-white">
+                    ثبت نام
+                </label>
+            </div>
+        {% endif %}
     </div>
-    <div class="flex-none gap-2">
+    <div class="navbar-center">
         <div class="form-control">
             <input type="text" placeholder="جستجو" class="input input-bordered" />
         </div>
-        {% comment %} <div class="dropdown dropdown-right">
-        <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-          <div class="w-10 rounded-full">
-            <img src="https://api.lorem.space/image/face?hash=33791" />
-          </div>
-        </label>
-        <ul tabindex="0" class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52 mt-14">
-          <li>
-            <a class="justify-between">
-              پروفایل
-              <span class="badge">New</span>
-            </a>
-          </li>
-          <li><a>تنظیمات</a></li>
-          <li><a>خروج</a></li>
-        </ul>
-        </div> {% endcomment %}
-        <div class="flex-none gap-2">
-            <button class="btn btn-ghost">ورود</button>
-            <button class="btn btn-ghost">ثبت نام</button>
-        </div>
+    </div>
+    <div class="navbar-end">
+        <a href="{% url 'home:home' %}" class="btn btn-ghost hover:bg-white">
+            <img src="https://img.icons8.com/color/48/000000/chat--v1.png"/>
+        </a>
     </div>
 </div>

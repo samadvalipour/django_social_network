@@ -1,0 +1,57 @@
+<div class="card shadow-sm border-y pt-4 pb-3 pr-6 pl-5 bg-white flex flex-col">
+    <div class="flex flex-row gap-2">
+        <a class="text-center" href="{% url 'account:profile' post.user.id %}">
+            <label class="btn btn-ghost btn-circle avatar">
+                <div class="w-12 rounded-full">
+                    <img src="https://api.lorem.space/image/face?hash=33791" />
+                </div>
+            </label>
+        </a>
+        <div class="flex-1">
+            <small>{{ post.updated|date:"j M" }}</small>
+            <p>{{ post.user.username }}</p>
+        </div>
+        {% if post.user.id == request.user.id %}
+            <div class="flex-none ">
+                <div class="dropdown dropdown-right">
+                    <label tabindex="0" class="btn btn-xs btn-link text-neutral">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             fill="none"
+                             viewBox="0 0 24 24"
+                             class="inline-block w-5 h-5 stroke-current">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z">
+                            </path>
+                        </svg>
+                    </label>
+                    <ul tabindex="0"
+                        class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box">
+                        <li>
+                            <a href="{% url 'account:post_delete' post.id %}">
+                                <i class="fa-solid fa-trash-can"></i>حدف</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'account:post_update' post.id %}"> <i class="fa-solid fa-pen"></i>ویرایش</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div class="w-full flex flex-col">
+        <h1 class="text-justify font-black self-center pb-3 rounded">{{ post.title }}</h1>
+        <p class="text-justify">{{ post.body }}</p>
+    </div>
+    <div class="divider opacity-40 my-1"></div>
+    <div class="flex text-gray-600  flex-row gap-1">
+        {% comment %} <div class="flex items-center"> {% endcomment %}
+            <a class="btn btn-ghost btn-xs hover:bg-green-100 gap-2" href="{% url 'account:comment_create' post.id %}">
+                <i class="text-sm fa-regular fa-comment"></i>
+                <small class="text-gray-400">{{comments.count}}</small>
+            </a>
+        {% comment %} </div> {% endcomment %}
+        <a class="btn btn-ghost btn-xs hover:bg-red-100 gap-2" href="http://">
+            <i class="text-sm fa-regular fa-heart"></i>
+            <small class="text-gray-400">543</small>
+        </a>
+    </div>
+</div>

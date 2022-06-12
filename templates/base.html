@@ -3,8 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <title>{{ title }}</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap"
               rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/daisyui@2.15.1/dist/full.css"
@@ -12,15 +12,23 @@
               type="text/css"/>
         <script src="https://cdn.tailwindcss.com"></script>
         <style>
-        body{
-        font-family: 'Vazirmatn', sans-serif;
-    }
+            body{
+                font-family: 'Vazirmatn', sans-serif;
+            }
         </style>
     </head>
+    {% include 'account/loginmodal.html' %}
+    {% include 'account/registrationmodal.html' %}
     <body>
-        <div class="w-screen md:flex md:justify-center">
-            <div class="w-full md:max-w-2xl h-screen bg-gray-100">{% include 'inc\navbar.html' %}</div>
+        <div class="w-screen overflow-x-hidden h-screen md:flex md:justify-center">
+            <div class="w-full relative md:max-w-2xl h-full">
+                {% include 'inc\message.html' %}
+                {% include 'inc\navbar.html' %}
+                <div class="p-1 bg-blue-100/20 min-h-full">
+                    {% block content %}
+                    {% endblock content %}
+                </div>
+            </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     </body>
 </html>

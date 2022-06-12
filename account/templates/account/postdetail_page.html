@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% include "account\inc\postdetail_card.html" %}
+    <div class="">
+    {% for comment in comments  %}
+        {% include "account\inc\comment_card.html" %}
+    {% endfor %}
+</div>
+{% endblock content %}
