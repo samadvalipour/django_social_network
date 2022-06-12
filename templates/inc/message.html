@@ -1,0 +1,22 @@
+{% if messages %}
+    {% for message in messages %}
+        <div {% if message.tags %} id="message" class="z-20 absolute self-center rounded left-0 w-full mt-16 alert alert-{{ message.tags }}{% endif %}
+             shadow-lg">
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="stroke-current flex-shrink-0 h-6 w-6"
+                     fill="none"
+                     viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>{{ message }}</span>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+<script>
+    var message_ele = document.getElementById("message");
+    setTimeout(function(){ 
+    message_ele.style.display = "none"; 
+    }, 3000);
+</script>

@@ -1,0 +1,16 @@
+<div class="card mr-4 my-1 shadow bg-base-100 p-2 hover:bg-gray-100/10 text-neutral ">
+    <div class="flex">
+        <a href="{% url 'account:profile' post.user.id %}">
+            <label class="p-2 avatar">
+                <div class="w-8 rounded-full">
+                    <img src="https://api.lorem.space/image/face?hash=33791" />
+                </div>
+            </label>
+        </a>
+        <small class="self-center">{{ comment.user.username }}</small>
+    </div>
+    <div class="px-3 pb-4 pt-2">
+        <p class="block">
+        {{ comment.body|truncatechars:70 }}</a>
+    </div>
+</div>

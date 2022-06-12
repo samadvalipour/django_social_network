@@ -1,0 +1,30 @@
+
+    <div class="card mr-4 my-1 shadow bg-base-100 p-2 text-neutral ">
+        <div class="flex">
+            <div class="flex flex-1">
+                <a href="{% url 'account:profile' post.user.id %}">
+                    <label class="p-2 avatar">
+                        <div class="w-8 rounded-full">
+                            <img src="https://api.lorem.space/image/face?hash=33791" />
+                        </div>
+                    </label>
+                </a>
+                <small class="self-center">{{ request.user.username }}</small>
+            </div>
+        </div>
+        <div class="px-3 pb-4 pt-2">
+            <form action="" method="post">
+                {% csrf_token %}
+                {% for field in form %} 
+                    <div class="form-control">
+                        {{ field }}
+                    </div>
+                {% endfor %}
+                <div class="form-control mt-6">
+                    <input type="submit"
+                           class="btn btn-primary text-primary hover:text-white"
+                           value="ارسال">
+                </div>
+            </form>
+        </div>
+    </div>

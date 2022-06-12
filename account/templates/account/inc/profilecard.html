@@ -1,0 +1,18 @@
+<div class="card w-full bg-neutral text-neutral-content shadow-md">
+    <div class="card-body items-center text-center">
+        <div class="avatar online">
+            <div class="w-24 rounded-full">
+                <img src="https://api.lorem.space/image/face?hash=33791" />
+            </div>
+        </div>
+        <div class="flex flex-col items-center">
+        <h2 class="card-title">{{ user.username }}</h2>
+        {% if user != request.user and relation %}
+        <a href="{% url 'account:user_unfollow' user.id %}" class="btn btn-ghost btn-sm">دنبال نکردن</a>
+        {% else %}
+        <a href="{% url 'account:user_follow' user.id %}" class="btn btn-primary btn-sm">دنبال کردن</a>
+        {% endif %}
+    </div>
+        <p>{{ user.email }}</p>
+    </div>
+</div>

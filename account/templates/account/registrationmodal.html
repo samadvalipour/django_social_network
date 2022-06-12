@@ -1,0 +1,23 @@
+<input type="checkbox" id="registration-modal" class="modal-toggle" />
+<label for="registration-modal" class="modal cursor-pointer">
+    <label class="modal-box relative" for="">
+        <div class="card-body">
+            <form action="{% url 'account:registration' %}" method="post">
+                {% csrf_token %}
+                {% for field in registrationform %}
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">{{ field.label }}</span>
+                        </label>
+                        {{ field }}
+                    </div>
+                {% endfor %}
+                <div class="form-control mt-6">
+                    <input type="submit"
+                           class="btn btn-primary text-primary hover:text-white"
+                           value="ثبت نام">
+                </div>
+            </form>
+        </div>
+    </label>
+</label>
