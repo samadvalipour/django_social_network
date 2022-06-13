@@ -67,7 +67,11 @@ class PostDetail(View):
     def get(self,request,post_slug,post_id):
         post = get_object_or_404(Post,pk=post_id,slug=post_slug)
         Comments = post.postcomment.filter(isreply=False)
-        return render(request,"account/postdetail_page.html",{"post":post,"comments":Comments,"can_like":post.can_like(request.user)})
+        if request.user.is_authenticated:
+            can_like = post.can_like(request.user)
+        else:
+            can_like = True
+        return render(request,"account/postdetail_page.html",{"post":post,"comments":Comments,"can_like":can_like})
 
 class DeletePost(View):
     def get(self,request,post_id):
