@@ -1,5 +1,5 @@
 
-from tokenize import Comment
+from math import fabs
 from django.shortcuts import redirect, render,get_object_or_404
 from django.views import View
 from account.forms import LoginForm, RegistrationForm, PostCreateUpdateForm, CommentCreateForm
@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from home.models import Post,Comment
+from home.models import Post,Comment,Like
 from .models import FollowRelation
 
 class UserRegistration(View):
@@ -67,7 +67,7 @@ class PostDetail(View):
     def get(self,request,post_slug,post_id):
         post = get_object_or_404(Post,pk=post_id,slug=post_slug)
         Comments = post.postcomment.filter(isreply=False)
-        return render(request,"account/postdetail_page.html",{"post":post,"comments":Comments})
+        return render(request,"account/postdetail_page.html",{"post":post,"comments":Comments,"can_like":post.can_like(request.user)})
 
 class DeletePost(View):
     def get(self,request,post_id):
@@ -192,4 +192,14 @@ class CreateReply(LoginRequiredMixin,View):
             messages.error(request,"نظر شما ارسال نشد","error")
         return redirect("account:post_detail",self.post_instance.slug,self.post_instance.id)
 
+class LikePost(LoginRequiredMixin,View):
 
+    def get(self,request,post_id):
+        post = get_object_or_404(Post,pk=post_id)
+        relation = Like.objects.filter(user=request.user,post=post)
+        if relation.exists():
+            relation.delete()
+        else:
+            relation = Like(user=request.user,post=post)
+            relation.save()
+        return redirect("account:post_detail",post.slug,post.id)
