@@ -1,4 +1,4 @@
-<div class=" shadow card my-1 p-2 bg-base-100 hover:bg-gray-100/10 text-neutral ">
+<div class=" shadow card mt-1 p-2 bg-base-100 hover:bg-gray-100/10 text-neutral ">
     <div class="flex">
         <div class="flex flex-1">
             <a href="{% url 'account:profile' post.user.id %}">
@@ -42,7 +42,7 @@
     <div class="flex px-2 text-gray-400 flex-row justify-end gap-3">
         <div>
             <i class="text-sm  fa-regular fa-comments"></i>
-            <small>{{ post.postcomment.count }}</small>
+            <small>{{ post.comment_count }}</small>
         </div>
         <div>
             <i class=" text-sm fa-regular fa-heart"></i>

@@ -157,16 +157,39 @@ class CreateComment(LoginRequiredMixin,View):
 
     def get(self,request,post_id):
         form = CommentCreateForm()
-        return render(request,"account/createcomment_page.html",{"form":form,"post":self.post_instance})
+        return render(request,"account/createcomment_page.html",{"form":form,"post":self.post_instance,"iscreatecommentpage":True})
     def post(self,request,post_id):
         form = CommentCreateForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
             comment = Comment(user=request.user,post=self.post_instance,body=cd["body"])
             comment.save()
-            messages.success(request,"کامنت با موفقیت ارسال شد","success")
+            messages.success(request,"نظر شما با موفقیت ارسال شد","success")
         else:
-            messages.error(request,"کامنت ارسال نشد","error")
+            messages.error(request,"نظر شما ارسال نشد","error")
+        return redirect("account:post_detail",self.post_instance.slug,self.post_instance.id)
+
+
+class CreateReply(LoginRequiredMixin,View):
+    
+    def setup(self, request, *args,**kwargs):
+        self.post_instance = get_object_or_404(Post,pk=kwargs["post_id"])
+        self.comment_instance = get_object_or_404(Comment,pk=kwargs["comment_id"])
+        return super().setup(request, *args, **kwargs)
+
+    def get(self,request,*args,**kwargs):
+        form = CommentCreateForm()
+        return render(request,"account/createcomment_page.html",{"form":form,"post":self.comment_instance,"iscreatereplypage":True})
+
+    def post(self,request,*args,**kwargs):
+        form = CommentCreateForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            comment = Comment(user=request.user,post=self.post_instance,reply=self.comment_instance,body=cd["body"],isreply=True)
+            comment.save()
+            messages.success(request,"نظر شما با موفقیت ارسال شد","success")
+        else:
+            messages.error(request,"نظر شما ارسال نشد","error")
         return redirect("account:post_detail",self.post_instance.slug,self.post_instance.id)
 
 

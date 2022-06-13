@@ -13,6 +13,9 @@ class Comment(models.Model):
     def __str__(self):
         return f"{self.user} - {self.body}"
 
+    def reply_count(self):
+        return self.replycomment.count()
+
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,related_name="posts")
     title = models.CharField(max_length=255)
@@ -28,3 +31,6 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse("account:post_detail", args=(self.slug, self.id))
+
+    def comment_count(self):
+        return self.postcomment.count()

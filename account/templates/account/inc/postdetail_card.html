@@ -1,4 +1,4 @@
-<div class="card shadow-sm border-y pt-4 pb-3 pr-6 pl-5 bg-white flex flex-col">
+<div class="card shadow-sm  pt-4 pb-3 pr-6 pl-5 bg-white flex flex-col">
     <div class="flex flex-row gap-2">
         <a class="text-center" href="{% url 'account:profile' post.user.id %}">
             <label class="btn btn-ghost btn-circle avatar">
@@ -42,16 +42,25 @@
         <p class="text-justify">{{ post.body }}</p>
     </div>
     <div class="divider opacity-40 my-1"></div>
-    <div class="flex text-gray-600  flex-row gap-1">
-        {% comment %} <div class="flex items-center"> {% endcomment %}
-            <a class="btn btn-ghost btn-xs hover:bg-green-100 gap-2" href="{% url 'account:comment_create' post.id %}">
+    {% if iscreatecommentpage %}
+        <div>
+            <i class="text-sm text-gray-400 fa-solid fa-comment"></i>
+        </div>
+    {% elif iscreatereplypage %}
+        <div>
+            <i class="text-sm text-gray-400 fa-solid fa-reply"></i>
+        </div>
+    {% else %}
+        <div class="flex text-gray-600  flex-row gap-1">
+            <a class="btn btn-ghost btn-xs hover:bg-green-100 gap-2"
+               href="{% url 'account:comment_create' post.id %}">
                 <i class="text-sm fa-regular fa-comment"></i>
-                <small class="text-gray-400">{{comments.count}}</small>
+                <small class="text-gray-400">{{ post.comment_count }}</small>
             </a>
-        {% comment %} </div> {% endcomment %}
-        <a class="btn btn-ghost btn-xs hover:bg-red-100 gap-2" href="http://">
-            <i class="text-sm fa-regular fa-heart"></i>
-            <small class="text-gray-400">543</small>
-        </a>
-    </div>
+            <a class="btn btn-ghost btn-xs hover:bg-red-100 gap-2" href="http://">
+                <i class="text-sm fa-regular fa-heart"></i>
+                <small class="text-gray-400">543</small>
+            </a>
+        </div>
+    {% endif %}
 </div>

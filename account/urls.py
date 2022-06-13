@@ -13,6 +13,7 @@ urlpatterns = [
     path('post/create/', views.CreatePost.as_view(), name='post_create'),
     path('follow/<int:user_id>', views.FollowUser.as_view(), name='user_follow'),
     path('unfollow/<int:user_id>', views.UnfollowUser.as_view(), name='user_unfollow'),
-    path('post/comment/<int:post_id>', views.CreateComment.as_view(), name='comment_create')
-
+    path('post/comment/<int:post_id>', views.CreateComment.as_view(), name='comment_create'),
+    path('post/reply/<int:post_id>/<int:comment_id>', views.CreateReply.as_view(), name='reply_create')
+    
 ]
