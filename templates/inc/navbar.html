@@ -21,7 +21,8 @@
                         </li>
                     </ul>
                 </div>
-                <a class="btn btn-ghost hover:bg-blue-100 btn-square" href="{% url 'account:post_create' %}">
+                <a class="btn btn-ghost hover:bg-blue-100 btn-square"
+                   href="{% url 'account:post_create' %}">
                     <i class="text-primary fa-solid fa-plus text-2xl"></i>
                 </a>
             </div>
@@ -37,9 +38,11 @@
         {% endif %}
     </div>
     <div class="navbar-center">
-        <div class="form-control">
-            <input type="text" placeholder="جستجو" class="input input-bordered" />
-        </div>
+        {% if is_homepage %}
+            <form action="" method="get">
+                {% for field in searchform %}{{ field }}{% endfor %}
+            </form>
+        {% endif %}
     </div>
     <div class="navbar-end">
         <a href="{% url 'home:home' %}" class="btn btn-ghost hover:bg-white">
