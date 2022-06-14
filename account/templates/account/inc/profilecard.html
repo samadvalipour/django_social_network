@@ -7,11 +7,14 @@
         </div>
         <div class="flex flex-col items-center">
             <h2 class="card-title">{{ profile.name }}</h2>
-        <a href="{% url 'account:user_unfollow' user.id %}" class="btn btn-ghost btn-sm">دنبال نکردن</a>
-        {% else %}
-        <a href="{% url 'account:user_follow' user.id %}" class="btn btn-primary btn-sm">دنبال کردن</a>
-        {% endif %}
-    </div>
+            {% if user != request.user %}
+                {% if relation %}
+                    <a href="{% url 'account:user_unfollow' user.id %}" class="btn btn-ghost btn-sm">دنبال نکردن</a>
+                {% else %}
+                    <a href="{% url 'account:user_follow' user.id %}" class="btn btn-primary btn-sm">دنبال کردن</a>
+                {% endif %}
+            {% endif %}
+        </div>
         <p>{{ user.email }}</p>
         <p>{{profile.bio}}</p>
         {% if  request.user == user%}
