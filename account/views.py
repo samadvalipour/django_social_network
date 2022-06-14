@@ -1,14 +1,12 @@
-
-from tokenize import Comment
 from django.shortcuts import redirect, render,get_object_or_404
 from django.views import View
-from account.forms import LoginForm, RegistrationForm, PostCreateUpdateForm, CommentCreateForm
+from account.forms import LoginForm, RegistrationForm, PostCreateUpdateForm, CommentCreateForm,EditProfileForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from home.models import Post,Comment
-from .models import FollowRelation
+from home.models import Post,Comment,Like
+from .models import FollowRelation,Profile
 
 class UserRegistration(View):
 
@@ -60,14 +58,36 @@ class UserProfile(LoginRequiredMixin,View):
     def get(self,request,user_id):
         user = get_object_or_404(User,pk=user_id)
         user_posts=user.posts.all()
+        user_profile = Profile.objects.get(user=user)
         relaion = FollowRelation.objects.filter(from_user=request.user,to_user=user).exists()
-        return render(request,"account/profilepage.html",{"user":user,"posts":user_posts,"relation":relaion})
+        return render(request,"account/profilepage.html",{"user":user,"posts":user_posts,"relation":relaion,"profile":user_profile})
+
+class EditProfile(LoginRequiredMixin,View):
+    def get(self,request):
+        user = request.user
+        user_profile = Profile.objects.get(user=user)
+        form = EditProfileForm(instance=user_profile,initial={"email":user.email})
+        return render(request,"account/editprofile_page.html",{"form":form,"user":user})
+    def post(self,request):
+        user = request.user
+        user_profile = Profile.objects.get(user=user)
+        form = EditProfileForm(request.POST,instance=user_profile)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user.email = cd["email"]
+            user.save()
+            form.save()
+        return redirect("account:profile",user.id)
 
 class PostDetail(View):
     def get(self,request,post_slug,post_id):
         post = get_object_or_404(Post,pk=post_id,slug=post_slug)
         Comments = post.postcomment.filter(isreply=False)
-        return render(request,"account/postdetail_page.html",{"post":post,"comments":Comments})
+        if request.user.is_authenticated:
+            can_like = post.can_like(request.user)
+        else:
+            can_like = True
+        return render(request,"account/postdetail_page.html",{"post":post,"comments":Comments,"can_like":can_like})
 
 class DeletePost(View):
     def get(self,request,post_id):
@@ -192,4 +212,14 @@ class CreateReply(LoginRequiredMixin,View):
             messages.error(request,"نظر شما ارسال نشد","error")
         return redirect("account:post_detail",self.post_instance.slug,self.post_instance.id)
 
+class LikePost(LoginRequiredMixin,View):
 
+    def get(self,request,post_id):
+        post = get_object_or_404(Post,pk=post_id)
+        relation = Like.objects.filter(user=request.user,post=post)
+        if relation.exists():
+            relation.delete()
+        else:
+            relation = Like(user=request.user,post=post)
+            relation.save()
+        return redirect("account:post_detail",post.slug,post.id)

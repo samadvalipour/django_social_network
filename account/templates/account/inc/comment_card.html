@@ -1,44 +1,44 @@
 <div class="mr-5 my-2">
     <div class="card my-1 shadow bg-base-100 p-2 hover:bg-gray-100/10 text-neutral ">
         <div class="flex">
-            <a href="{% url 'account:profile' post.user.id %}">
+            <a href="{% url 'account:profile' comment.user.id %}">
                 <label class="p-2 avatar">
                     <div class="w-8 rounded-full">
                         <img src="https://api.lorem.space/image/face?hash=33791" />
                     </div>
                 </label>
             </a>
-            <small class="self-center">{{ comment.user.username }}</small>
+            <small class="self-center">{{ comment.user.profile.name }}</small>
         </div>
         <div class="px-3 pb-4 pt-2">
             <p class="block">
-            {{ comment.body|truncatechars:70 }}</a>
+            {{ comment.body }}</a>
         </div>
         <div class="flex text-gray-600  flex-row gap-1">
-        <a class="btn btn-ghost btn-xs hover:bg-yellow-100 gap-2" href="{% url 'account:reply_create' post.id comment.id %}">
-            <i class="fa-solid fa-reply"></i>
-            <small class="text-gray-400">{{ comment.reply_count }}</small>
-        </a>
+            <a class="btn btn-ghost btn-xs hover:bg-yellow-100 gap-2" href="{% url 'account:reply_create' post.id comment.id %}">
+                <i class="fa-solid fa-reply"></i>
+                <small class="text-gray-400">{{ comment.reply_count }}</small>
+            </a>
         </div>
     </div>
     {% with comment.replycomment.all as replies %}
         {% for onereply in replies  %}
-                <div class="card mr-10 my-1 shadow bg-base-100 p-2 hover:bg-gray-100/10 text-neutral ">
-                    <div class="flex">
-                        <a href="{% url 'account:profile' post.user.id %}">
-                            <label class="p-2 avatar">
-                                <div class="w-8 rounded-full">
-                                    <img src="https://api.lorem.space/image/face?hash=33791" />
-                                </div>
-                            </label>
-                        </a>
-                        <small class="self-center">{{ onereply.user.username }}</small>
-                    </div>
-                    <div class="px-3 pb-4 pt-2">
-                        <p class="block">
-                        {{ onereply.body|truncatechars:70 }}</a>
-                    </div>
+            <div class="card mr-10 my-1 shadow bg-base-100 p-2 hover:bg-gray-100/10 text-neutral ">
+                <div class="flex">
+                    <a href="{% url 'account:profile' post.user.id %}">
+                        <label class="p-2 avatar">
+                            <div class="w-8 rounded-full">
+                                <img src="https://api.lorem.space/image/face?hash=33791" />
+                            </div>
+                        </label>
+                    </a>
+                    <small class="self-center">{{ onereply.user.profile.name }}</small>
                 </div>
+                <div class="px-3 pb-4 pt-2">
+                    <p class="block">
+                    {{ onereply.body }}</a>
+                </div>
+            </div>
         {% endfor %}
     {% endwith %}
 </div>

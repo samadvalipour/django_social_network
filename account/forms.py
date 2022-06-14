@@ -1,11 +1,9 @@
-from cProfile import label
-from dataclasses import field
-from pyexpat import model
-from statistics import mode
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from home.models import Post,Comment
+from .models import Profile
+
 
 class RegistrationForm(forms.Form):
     username = forms.CharField(label='نام کاربری',error_messages={'required':"این کادر نباید خالی باشد"},widget=forms.TextInput(attrs={'class':'input input-bordered','placeholder':'نام کاربری'}) )
@@ -48,4 +46,17 @@ class CommentCreateForm(forms.ModelForm):
         }
         widgets = {
             'body':forms.Textarea(attrs={'class':'form-control textarea textarea-bordered h-32','placeholder':'متن'}),
+        }
+
+class EditProfileForm(forms.ModelForm):
+    email = forms.CharField(label='ایمیل',error_messages={'required':"این کادر نباید خالی باشد"},widget=forms.EmailInput(attrs={'class':'input input-bordered w-1/2','placeholder':'ایمیل'}) )
+    class Meta:
+        model=Profile
+        fields=["name","bio"]
+        labels={
+            "name":"نام نمایشی",
+            "bio":"بیوگرافی",}
+        widgets = {
+            "name":forms.TextInput(attrs={'class':'input input-bordered w-1/2','placeholder':'نام'}),
+            'bio':forms.Textarea(attrs={'class':'form-control textarea textarea-bordered h-32','placeholder':'متن'}),
         }

@@ -9,7 +9,7 @@
         </a>
         <div class="flex-1">
             <small>{{ post.updated|date:"j M" }}</small>
-            <p>{{ post.user.username }}</p>
+            <p>{{ post.user.profile.name }}</p>
         </div>
         {% if post.user.id == request.user.id %}
             <div class="flex-none ">
@@ -44,11 +44,11 @@
     <div class="divider opacity-40 my-1"></div>
     {% if iscreatecommentpage %}
         <div>
-            <i class="text-sm text-gray-400 fa-solid fa-comment"></i>
+            <i class="text-sm text-gray-300 fa-solid fa-comment"></i>
         </div>
     {% elif iscreatereplypage %}
         <div>
-            <i class="text-sm text-gray-400 fa-solid fa-reply"></i>
+            <i class="text-sm text-gray-300 fa-solid fa-reply"></i>
         </div>
     {% else %}
         <div class="flex text-gray-600  flex-row gap-1">
@@ -57,9 +57,14 @@
                 <i class="text-sm fa-regular fa-comment"></i>
                 <small class="text-gray-400">{{ post.comment_count }}</small>
             </a>
-            <a class="btn btn-ghost btn-xs hover:bg-red-100 gap-2" href="http://">
-                <i class="text-sm fa-regular fa-heart"></i>
-                <small class="text-gray-400">543</small>
+            <a class="btn btn-ghost btn-xs hover:bg-red-100 gap-2"
+               href="{% url 'account:post_like' post.id %}">
+                {% if can_like %}
+                    <i class="text-sm fa-regular fa-heart"></i>
+                {% else %}
+                    <i class="text-sm text-red-500 fa-solid fa-heart"></i>
+                {% endif %}
+                <small class="text-gray-400">{{ post.like_count }}</small>
             </a>
         </div>
     {% endif %}

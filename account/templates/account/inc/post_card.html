@@ -8,7 +8,7 @@
                     </div>
                 </label>
             </a>
-            <small class="self-center">{{ post.user.username }}</small>
+            <small class="self-center">{{ post.user.profile.name }}</small>
         </div>
         {% if post.user.id == request.user.id %}
             <div class="flex-none">
@@ -39,14 +39,14 @@
     <div class="px-3 pb-4 pt-2">
         <a class="block" href="{{ post.get_absolute_url }}">{{ post.body|truncatechars:70 }}</a>
     </div>
-    <div class="flex px-2 text-gray-400 flex-row justify-end gap-3">
+    <div class="flex px-2 text-gray-300 flex-row justify-end gap-3">
         <div>
-            <i class="text-sm  fa-regular fa-comments"></i>
+            <i class="text-sm  fa-solid fa-comments"></i>
             <small>{{ post.comment_count }}</small>
         </div>
         <div>
-            <i class=" text-sm fa-regular fa-heart"></i>
-            <small>543</small>
+            <i class=" text-sm fa-solid fa-heart"></i>
+            <small>{{ post.like_count }}</small>
         </div>
     </div>
 </div>
