@@ -8,7 +8,7 @@
                     </div>
                 </label>
             </a>
-            <small class="self-center">{{ post.user.username }}</small>
+            <small class="self-center">{{ post.user.profile.name }}</small>
         </div>
         {% if post.user.id == request.user.id %}
             <div class="flex-none">

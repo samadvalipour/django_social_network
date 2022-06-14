@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content  %}
+    <div class="card shadow bg-base-100 p-2 pt-5 text-neutral ">
+        <div class="card-title self-center">ویرایش اطلاعات شخصی</div>
+        <div class="card-body">
+            <form action="" method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-control mb-3">
+                        <label class="label">
+                            <span class="label-text">{{ field.label }}</span>
+                        </label>
+                        {{ field }}
+                    </div>
+                {% endfor %}
+                <div class="form-control mt-6">
+                    <input type="submit"
+                           class="btn btn-primary text-primary hover:text-white"
+                           value="ویرایش">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

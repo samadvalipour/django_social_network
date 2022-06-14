@@ -9,7 +9,7 @@
         </a>
         <div class="flex-1">
             <small>{{ post.updated|date:"j M" }}</small>
-            <p>{{ post.user.username }}</p>
+            <p>{{ post.user.profile.name }}</p>
         </div>
         {% if post.user.id == request.user.id %}
             <div class="flex-none ">
